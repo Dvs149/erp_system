@@ -1,0 +1,57 @@
+# =========================
+# 🔐 ENV FILES
+# =========================
+.env
+Backend/.env
+Frontend/.env
+
+# =========================
+# 📦 DEPENDENCIES
+# =========================
+Backend/vendor/
+Frontend/node_modules/
+
+# =========================
+# ⚙️ BUILD FILES
+# =========================
+Frontend/dist/
+Frontend/build/
+
+# =========================
+# 🧾 LOGS
+# =========================
+Backend/storage/logs/*
+Frontend/npm-debug.log*
+yarn-error.log*
+
+# =========================
+# 🧪 CACHE / TEMP FILES
+# =========================
+Backend/bootstrap/cache/*
+Backend/storage/framework/cache/*
+Backend/storage/framework/sessions/*
+Backend/storage/framework/views/*
+
+# =========================
+# 🔑 KEYS / SECRETS
+# =========================
+Backend/storage/*.key
+
+# =========================
+# 💻 OS FILES
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# 🧠 IDE FILES
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# 🔁 OPTIONAL (lock files)
+# =========================
+# (Keep them if working in team)
+# Backend/composer.lock
+# Frontend/package-lock.json
