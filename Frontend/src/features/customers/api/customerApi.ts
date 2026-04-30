@@ -1,7 +1,13 @@
 import client from "../../../api/client";
 
-export const getCustomers = async () => {
-    const res = await client.get("/customers");
+export const getCustomers = async (
+    page = 1,
+    search = "",
+    perPage = 10
+) => {
+    const res = await client.get(
+        `/customers?page=${page}&search=${search}&per_page=${perPage}`
+    );
     return res.data;
 };
 

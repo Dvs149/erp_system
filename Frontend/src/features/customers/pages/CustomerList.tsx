@@ -6,17 +6,16 @@ import { useNavigate } from "react-router-dom";
 import { deleteCustomer } from "../api/customerApi";
 import ConfirmModal from "../../../components/ui/ConfirmModal";
 import toast from "react-hot-toast";
-
-interface Customer {
-    id: number;
-    name: string;
-    email: string;
-    phone?: string;
-}
-
+import type { Customer } from "../types";
 
 const CustomerList = () => {
+
+    const [search, setSearch] = useState("");
+    const [perPage, setPerPage] = useState(10);
+    
     const [customers, setCustomers] = useState<Customer[]>([]);
+    const [page, setPage] = useState(1);
+    const [lastPage, setLastPage] = useState(1);
     const [loading, setLoading] = useState(true);
 
     const [selectedId, setSelectedId] = useState<number | null>(null);
@@ -26,13 +25,21 @@ const CustomerList = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchCustomers();
-    }, []);
+        const delay = setTimeout(() => {
+            fetchCustomers();
+        }, 400); // wait before calling API
+
+        return () => clearTimeout(delay);
+    }, [page, search, perPage]);
 
     const fetchCustomers = async () => {
         try {
-            const data = await getCustomers();
-            setCustomers(data);
+            setLoading(true);
+
+            const res = await getCustomers(page, search, perPage);
+
+            setCustomers(res.data);
+            setLastPage(res.last_page);
         } catch (err) {
             console.error(err);
         } finally {
@@ -40,26 +47,42 @@ const CustomerList = () => {
         }
     };
 
-    if (loading) return <p>Loading...</p>;
+    
 
     return (
         <div className="p-4">
 
             {/* Header */}
-            <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-semibold text-gray-800">Customers</h2>
-
-                <button
-                    onClick={() => navigate("/customers/create")}
-                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow"
-                >
-                    + Add Customer
-                </button>
-            </div>
+            
 
             {/* Table Card */}
             <div className="bg-white shadow rounded-lg overflow-hidden">
 
+                <div className="flex items-center justify-between m-4">
+
+                    {/* Left: Search */}
+                    <div className="flex items-center gap-3">
+                        <input
+                            type="text"
+                            placeholder="Search customers..."
+                            value={search}
+                            onChange={(e) => {
+                                setSearch(e.target.value);
+                                setPage(1);
+                            }}
+                            className="w-72 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        />
+                    </div>
+
+                    {/* Right: Button */}
+                    <button
+                        onClick={() => navigate("/customers/create")}
+                        className="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg shadow"
+                    >
+                        + Add Customer
+                    </button>
+
+                </div>
                 <table className="w-full text-sm text-left">
 
                     {/* Head */}
@@ -77,10 +100,12 @@ const CustomerList = () => {
                     <tbody className="divide-y">
 
                         {customers.length > 0 ? (
-                            customers.map((c) => (
+                            customers.map((c, index) => (
                                 <tr key={c.id} className="hover:bg-gray-50">
 
-                                    <td className="px-4 py-3">{c.id}</td>
+                                    <td className="px-4 py-3">
+                                        {(page - 1) * 10 + index + 1}
+                                    </td>
                                     <td className="px-4 py-3 font-medium">{c.name}</td>
                                     <td className="px-4 py-3 text-gray-600">{c.email}</td>
                                     <td className="px-4 py-3">{c.phone || "-"}</td>
@@ -118,6 +143,29 @@ const CustomerList = () => {
 
                     </tbody>
                 </table>
+                <div className="flex justify-between items-center m-4">
+
+                    <button
+                        disabled={page === 1}
+                        onClick={() => setPage(page - 1)}
+                        className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+                    >
+                        Prev
+                    </button>
+
+                    <span className="text-sm text-gray-600">
+                        Page {page} of {lastPage}
+                    </span>
+
+                    <button
+                        disabled={page === lastPage}
+                        onClick={() => setPage(page + 1)}
+                        className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+                    >
+                        Next
+                    </button>
+
+                </div>
             </div>
             <ConfirmModal
                 open={open}

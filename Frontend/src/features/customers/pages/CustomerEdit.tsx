@@ -13,8 +13,8 @@ const schema = z.object({
     phone: z
         .string()
         .optional()
-        .refine((val) => !val || /^\d{10,15}$/.test(val), {
-            message: "Phone must be 10–15 digits",
+        .refine((val) => !val || /^[+]?[\d\s\-()]{10,20}$/.test(val), {
+            message: "Phone must be 10–20 characters",
         }),
 });
 
