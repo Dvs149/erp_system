@@ -195,5 +195,3 @@ This project is open-source and available under the MIT License.
 ## ⭐ If you like this project
 
 Give it a ⭐ on GitHub!
-
-
