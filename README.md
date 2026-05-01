@@ -181,7 +181,7 @@ src/api/client.ts
 * Export data (Excel / CSV)
 * Import data (bulk upload)
 * Notifications system
-* Deployment (Vercel + Railway)
+* Deployment
 
 ---
 
