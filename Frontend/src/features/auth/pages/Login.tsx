@@ -10,7 +10,7 @@ const Login = () => {
 
     // ✅ Prevent access to login if already logged in
     useEffect(() => {
-        if (localStorage.getItem("token")) {
+        if (sessionStorage.getItem("token")) {
             navigate("/");
         }
     }, []);
@@ -20,7 +20,7 @@ const Login = () => {
             const res = await login({ email, password });
 
             // ✅ store token
-            localStorage.setItem("token", res.token);
+            sessionStorage.setItem("token", res.token);
 
             // ✅ redirect
             navigate("/", { replace: true });

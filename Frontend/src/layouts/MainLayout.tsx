@@ -1,4 +1,5 @@
 import { Outlet, useNavigate, NavLink, useLocation } from "react-router-dom";
+import { useIdleLogout } from "../hooks/useIdleLogout";
 
 const MainLayout = () => {
     const navigate = useNavigate();
@@ -25,6 +26,8 @@ const MainLayout = () => {
                 return "Dashboard";
         }
     };
+
+    useIdleLogout(); // ✅ enable auto logout
 
     return (
         <div className="flex min-h-screen bg-gray-100">
