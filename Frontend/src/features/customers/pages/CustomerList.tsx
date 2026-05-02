@@ -1,7 +1,7 @@
 // src/features/customers/pages/CustomerList.tsx
 
 import { useEffect, useState } from "react";
-import { getCustomers } from "../api/customerApi";
+import { getCustomers, exportCustomers } from "../api/customerApi";
 import { useNavigate } from "react-router-dom";
 import { deleteCustomer } from "../api/customerApi";
 import ConfirmModal from "../../../components/ui/ConfirmModal";
@@ -47,6 +47,25 @@ const CustomerList = () => {
         }
     };
 
+    const handleExport = async () => {
+        try {
+            const data = await exportCustomers();
+
+            const url = window.URL.createObjectURL(new Blob([data]));
+            const link = document.createElement("a");
+
+            link.href = url;
+            link.setAttribute("download", "customers.csv");
+
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
     
 
     return (
@@ -75,12 +94,21 @@ const CustomerList = () => {
                     </div>
 
                     {/* Right: Button */}
-                    <button
-                        onClick={() => navigate("/customers/create")}
-                        className="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg shadow"
-                    >
-                        + Add Customer
-                    </button>
+                    <div>
+                        <button
+                            onClick={handleExport}
+                            className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow mr-5"
+                        >
+                            Export CSV
+                        </button>
+                        <button
+                            onClick={() => navigate("/customers/create")}
+                            className="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg shadow"
+                        >
+                            + Add Customer
+                        </button>
+
+                    </div>
 
                 </div>
                 <table className="w-full text-sm text-left">

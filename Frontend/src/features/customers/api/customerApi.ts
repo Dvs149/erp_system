@@ -40,3 +40,10 @@ export const deleteCustomer = async (id: number) => {
     const res = await client.delete(`/customers/${id}`);
     return res.data;
 };
+
+export const exportCustomers = async () => {
+    const res = await client.get("/customers/export", {
+        responseType: "blob",
+    });
+    return res.data;
+};

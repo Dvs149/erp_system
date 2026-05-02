@@ -5,7 +5,6 @@ const IDLE_TIME = 3 * 60 * 1000; // 1 minute
 
 export const useIdleLogout = () => {
     const navigate = useNavigate();
-    console.log("useIdleLogout initialized");
     useEffect(() => {
         let timeout: any;
 

@@ -86,4 +86,36 @@ class CustomerController extends Controller
             'message' => 'Customer deleted'
         ]);
     }
+    public function export()
+    {
+        // dd('d');
+        $customers = Customer::select('id', 'name', 'email', 'phone')->get();
+
+        $filename = "customers.csv";
+
+        $headers = [
+            "Content-Type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=$filename",
+        ];
+
+        $callback = function () use ($customers) {
+            $file = fopen('php://output', 'w');
+
+            // Header row
+            fputcsv($file, ['ID', 'Name', 'Email', 'Phone']);
+
+            foreach ($customers as $c) {
+                fputcsv($file, [
+                    $c->id,
+                    $c->name,
+                    $c->email,
+                    $c->phone,
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }
