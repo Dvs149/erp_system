@@ -9,7 +9,9 @@ const Login = lazy(() => import("../features/auth/pages/Login"));
 const CustomerList = lazy(() => import("../features/customers/pages/CustomerList"));
 const CustomerCreate = lazy(() => import("../features/customers/pages/CustomerCreate"));
 const CustomerEdit = lazy(() => import("../features/customers/pages/CustomerEdit"));
-
+const SupplierList = lazy(() => import("../features/suppliers/pages/SupplierList"));
+const SupplierCreate = lazy(() => import("../features/suppliers/pages/SupplierCreate"));
+const SupplierEdit = lazy(() => import("../features/suppliers/pages/SupplierEdit"));    
 const AppRoutes = () => {
     return (
         <BrowserRouter>
@@ -36,6 +38,11 @@ const AppRoutes = () => {
                         <Route path="customers" element={<CustomerList />} />
                         <Route path="customers/create" element={<CustomerCreate />} />
                         <Route path="customers/:id/edit" element={<CustomerEdit />} />
+
+                        <Route path="/suppliers" element={<SupplierList />} />
+                        <Route path="/suppliers/create" element={<SupplierCreate />} />
+                        <Route path="/suppliers/:id/edit" element={<SupplierEdit />} />
+
                     </Route>
 
                 </Routes>

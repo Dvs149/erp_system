@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const IDLE_TIME = 3 * 60 * 1000; // 1 minute
+const IDLE_TIME = 60 * 60 * 1000; // 1 minute
 
 export const useIdleLogout = () => {
     const navigate = useNavigate();

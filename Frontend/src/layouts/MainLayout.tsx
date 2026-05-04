@@ -67,6 +67,17 @@ const MainLayout = () => {
                     >
                         Customers
                     </NavLink>
+                    <NavLink
+                        to="/suppliers"
+                        className={({ isActive }) =>
+                            `block px-4 py-2 rounded transition ${isActive
+                                ? "bg-blue-500 text-white"
+                                : "text-gray-300 hover:bg-gray-800 hover:text-white"
+                            }`
+                        }
+                    >
+                        Suppliers
+                    </NavLink>
 
                 </nav>
 

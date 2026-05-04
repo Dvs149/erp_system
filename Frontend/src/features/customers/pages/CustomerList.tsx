@@ -17,6 +17,7 @@ const CustomerList = () => {
     const [page, setPage] = useState(1);
     const [lastPage, setLastPage] = useState(1);
     const [loading, setLoading] = useState(true);
+    const [pageLoading, setPageLoading] = useState(false);
 
     const [selectedId, setSelectedId] = useState<number | null>(null);
     const [open, setOpen] = useState(false);
@@ -24,26 +25,38 @@ const CustomerList = () => {
     
     const navigate = useNavigate();
 
+    // 🔍 Search (debounced)
     useEffect(() => {
         const delay = setTimeout(() => {
-            fetchCustomers();
-        }, 400); // wait before calling API
+            fetchCustomers("normal");
+        }, 400);
 
         return () => clearTimeout(delay);
-    }, [page, search, perPage]);
+    }, [search]);
 
-    const fetchCustomers = async () => {
+    // 📄 Pagination
+    useEffect(() => {
+        fetchCustomers("page");
+    }, [page]);
+
+    const fetchCustomers = async (type: "normal" | "page" = "normal") => {
         try {
-            setLoading(true);
+            if (type === "page") {
+                setPageLoading(true);
+            } else {
+                setLoading(true);
+            }
 
-            const res = await getCustomers(page, search, perPage);
+            const res = await getCustomers(page, search);
 
             setCustomers(res.data);
             setLastPage(res.last_page);
+
         } catch (err) {
             console.error(err);
         } finally {
             setLoading(false);
+            setPageLoading(false);
         }
     };
 
@@ -174,11 +187,15 @@ const CustomerList = () => {
                 <div className="flex justify-between items-center m-4">
 
                     <button
-                        disabled={page === 1}
-                        onClick={() => setPage(page - 1)}
+                        disabled={page === 1 || pageLoading}
+                        onClick={() => setPage((prev) => prev - 1)}
                         className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
                     >
-                        Prev
+                        {pageLoading ? (
+                            <span className="animate-spin">⏳</span>
+                        ) : (
+                            "Prev"
+                        )}
                     </button>
 
                     <span className="text-sm text-gray-600">
@@ -186,11 +203,15 @@ const CustomerList = () => {
                     </span>
 
                     <button
-                        disabled={page === lastPage}
-                        onClick={() => setPage(page + 1)}
+                        disabled={page === lastPage || pageLoading}
+                        onClick={() => setPage((prev) => prev + 1)}
                         className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
                     >
-                        Next
+                        {pageLoading ? (
+                            <span className="animate-spin">⏳</span>
+                        ) : (
+                            "Next"
+                        )}
                     </button>
 
                 </div>

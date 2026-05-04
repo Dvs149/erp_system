@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CustomerController;
+use App\Http\Controllers\API\SupplierController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +26,5 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/customers/export', [CustomerController::class, 'export']);
     Route::apiResource('customers', CustomerController::class);
+    Route::apiResource('suppliers', SupplierController::class);
 });
