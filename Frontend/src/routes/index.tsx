@@ -35,10 +35,12 @@ const AppRoutes = () => {
                         <Route index element={<Home />} />
 
                         {/* ✅ Clean nested routes */}
+                        {/*Customer*/}
                         <Route path="customers" element={<CustomerList />} />
                         <Route path="customers/create" element={<CustomerCreate />} />
                         <Route path="customers/:id/edit" element={<CustomerEdit />} />
 
+                        {/*Suppliers*/}
                         <Route path="/suppliers" element={<SupplierList />} />
                         <Route path="/suppliers/create" element={<SupplierCreate />} />
                         <Route path="/suppliers/:id/edit" element={<SupplierEdit />} />
