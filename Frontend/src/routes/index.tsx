@@ -45,6 +45,7 @@ const AppRoutes = () => {
                         <Route path="/suppliers/create" element={<SupplierCreate />} />
                         <Route path="/suppliers/:id/edit" element={<SupplierEdit />} />
 
+                        
                     </Route>
 
                 </Routes>
