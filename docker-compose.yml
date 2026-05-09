@@ -1,0 +1,54 @@
+version: "3.9"
+
+services:
+
+  backend:
+    build:
+      context: ./Backend
+    container_name: laravel_backend
+    volumes:
+      - ./Backend:/var/www
+    ports:
+      - "8000:8000"
+    working_dir: /var/www
+    command: php artisan serve --host=0.0.0.0 --port=8000
+    depends_on:
+      - mysql
+
+  frontend:
+    build:
+      context: ./Frontend
+    container_name: react_frontend
+    volumes:
+      - ./Frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    stdin_open: true
+    tty: true
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: erp_system
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    depends_on:
+      - mysql
+volumes:
+  mysql_data:
