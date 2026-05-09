@@ -1,205 +1,254 @@
-# 🚀 ERP System (Laravel + React)
+# ERP System (Laravel + React + Docker)
 
-A modern full-stack ERP system built with **Laravel (API)** and **React (Vite + TypeScript)**.
-This project demonstrates real-world architecture including authentication, CRUD operations, search, pagination, reusable UI components, and session management.
-
----
-
-## 🛠️ Tech Stack
-
-### 🔹 Frontend
-
-* React (Vite + TypeScript)
-* React Router
-* React Hook Form + Zod
-* Tailwind CSS
-* Axios
-* React Hot Toast
-
-### 🔹 Backend
-
-* Laravel
-* Laravel Sanctum (Authentication)
-* REST API
+A modern ERP system built using **Laravel API backend** and **React + TypeScript frontend** with Docker support.
 
 ---
 
-## ✨ Features
+# 🚀 Features
 
-### 🔐 Authentication
-
-* Login using API
-* Token-based authentication (Sanctum)
-* Protected routes
-* Auto logout when browser is closed
-* Auto logout after **3 minutes of inactivity**
+## 🔐 Authentication
+- Login system
+- Protected routes
+- Auto logout on browser close
+- Auto logout after inactivity
 
 ---
 
-### 👤 Customer Management
-
-* Create Customer
-* View Customer List
-* Update Customer
-* Delete Customer (custom modal popup)
-* Serial number instead of DB ID
-
----
-
-### 🔍 Search & Pagination
-
-* Search by name, email, or phone
-* Server-side pagination
-* Page navigation (Prev / Next / Page numbers)
+## 👥 Customer Management
+- Create customer
+- Edit customer
+- Delete customer
+- Search customers
+- Pagination
+- Export CSV
+- Form validation
+- Toast notifications
+- Confirmation modal
 
 ---
 
-### 🎨 UI/UX
-
-* Professional admin dashboard layout
-* Sidebar navigation
-* Tailwind CSS responsive UI
-* Toast notifications (create / update / delete)
-* Custom confirmation modal (no browser alerts)
-* Smooth search without losing input focus
-
----
-
-### ⚙️ Architecture
-
-* Feature-based folder structure
-* Reusable components (Modal, UI elements)
-* API layer separation
-* Scalable and maintainable code
+## 🏢 Supplier Management
+- Create supplier
+- Edit supplier
+- Delete supplier
+- Search suppliers
+- Pagination
+- Form validation
+- Toast notifications
+- Confirmation modal
 
 ---
 
-## 📂 Project Structure
+# 🎨 Frontend Features
+- React + TypeScript
+- Tailwind CSS UI
+- React Hook Form
+- Zod validation
+- Responsive layout
+- Reusable modal component
+- Protected routes
+- Loading states
+- Debounced search
 
-```id="proj-struct"
-Frontend/
-│── src/
-│   ├── api/                 # Axios client & APIs
-│   ├── components/ui/       # Reusable UI components (Modal, etc.)
-│   ├── features/
-│   │   ├── auth/
-│   │   ├── customers/
-│   │   │   ├── api/
-│   │   │   ├── pages/
-│   │   │   └── types.ts
-│   ├── hooks/               # Custom hooks (idle logout)
-│   ├── layouts/
+---
+
+# ⚙️ Backend Features
+- Laravel REST APIs
+- API Resource routes
+- Pagination APIs
+- Validation
+- Seeders
+- MySQL database
+- Docker support
+
+---
+
+# 🐳 Docker Setup
+
+## Services
+- Laravel Backend
+- React Frontend
+- MySQL
+- phpMyAdmin
+
+---
+
+# 📦 Tech Stack
+
+## Frontend
+- React
+- TypeScript
+- Tailwind CSS
+- Axios
+- React Router
+- React Hook Form
+- Zod
+- React Hot Toast
+
+## Backend
+- Laravel
+- Sanctum
+- MySQL
+
+## DevOps
+- Docker
+- Docker Compose
+
+---
+
+# 📁 Project Structure
+
+```bash
+erp_system/
+│
+├── Backend/
+│   ├── app/
 │   ├── routes/
-│   └── App.tsx
+│   ├── database/
+│   └── Dockerfile
+│
+├── Frontend/
+│   ├── src/
+│   │   ├── features/
+│   │   ├── components/
+│   │   ├── layouts/
+│   │   └── routes/
+│   └── Dockerfile
+│
+└── docker-compose.yml
 ```
 
 ---
 
-## ⚡ Installation & Setup
+# 🚀 Installation
 
-### 🔹 Clone Repository
+## Clone Repository
 
-```bash id="clone"
-git clone https://github.com/your-username/erp-system.git
-cd erp-system
+```bash
+git clone <repository-url>
 ```
 
 ---
 
-### 🔹 Backend Setup (Laravel)
+# 🐳 Run with Docker
 
-```bash id="backend"
-cd Backend
-composer install
-cp .env.example .env
-php artisan key:generate
+## Start Containers
+
+```bash
+docker compose up --build
+```
+
+## Run in Background
+
+```bash
+docker compose up -d
+```
+
+---
+
+# 🌐 Access URLs
+
+| Service | URL |
+|---|---|
+| React Frontend | http://localhost:5173 |
+| Laravel API | http://localhost:8000 |
+| phpMyAdmin | http://localhost:8080 |
+
+---
+
+# 🔑 phpMyAdmin Login
+
+| Field | Value |
+|---|---|
+| Server | mysql |
+| Username | root |
+| Password | root |
+
+---
+
+# ⚙️ Laravel Setup
+
+## Enter Backend Container
+
+```bash
+docker exec -it laravel_backend bash
+```
+
+---
+
+## Run Migration
+
+```bash
 php artisan migrate
-php artisan serve
 ```
 
 ---
 
-### 🔹 Frontend Setup (React)
+## Seed Admin User
 
-```bash id="frontend"
-cd Frontend
-npm install
-npm run dev
+```bash
+php artisan db:seed
 ```
 
 ---
 
-## 🔑 Environment Variables
+# 👤 Admin Credentials
 
-### Backend (.env)
+| Email | Password |
+|---|---|
+| admin@gmail.com | admin |
 
-```id="env-backend"
-APP_URL=http://127.0.0.1:8000
+---
+
+# 📌 Environment Variables
+
+## Backend `.env`
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=erp_system
+DB_USERNAME=root
+DB_PASSWORD=root
 ```
 
-### Frontend
+---
 
-Update API base URL in:
+# 🧠 Concepts Implemented
 
-```id="env-frontend"
-src/api/client.ts
+- CRUD Operations
+- REST APIs
+- Form Validation
+- Authentication
+- Protected Routes
+- Pagination
+- Search
+- Debouncing
+- Docker Containers
+- API Integration
+- Reusable Components
+- Loading States
+- Confirmation Modals
+
+---
+
+# 🚀 Future Improvements
+
+- Dashboard with charts
+- Role & Permission system
+- React Query
+- Inventory module
+- Purchase orders
+- File upload
+- Excel/PDF export
+- Reusable table components
+- Deployment setup
+
+---
+
+# 👨‍💻 Author
+
+Divyesh Lunagariya
+
 ```
-
----
-
-## 🔌 API Endpoints
-
-### Auth
-
-* `POST /api/login`
-
-### Customers
-
-* `GET /api/customers?page=1&search=abc`
-* `POST /api/customers`
-* `PUT /api/customers/{id}`
-* `DELETE /api/customers/{id}`
-
----
-
-## 🧠 Key Concepts Implemented
-
-* Debounced search (optimized API calls)
-* Server-side pagination
-* Token-based session handling
-* Idle session timeout
-* Reusable UI components
-* Clean architecture
-
----
-
-## 🚀 Future Improvements
-
-* Dashboard analytics (charts & stats)
-* Role-based access control (Admin/User)
-* File upload (documents/images)
-* Export data (Excel / CSV)
-* Import data (bulk upload)
-* Notifications system
-* Deployment
-
----
-
-## 🤝 Contributing
-
-Pull requests are welcome. For major changes, please open an issue first.
-
----
-
-## 👨‍💻 Author
-
-**Divyesh Lunagariya**
-
-* 📧 [divyeshlunagariya149@gmail.com](mailto:divyeshlunagariya149@gmail.com)
-* 📱 +91 7016697110
-
----
-
-## ⭐ If you like this project
-
-Give it a ⭐ on GitHub!
