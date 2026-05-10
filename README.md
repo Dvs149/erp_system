@@ -196,7 +196,7 @@ php artisan db:seed
 
 | Email | Password |
 |---|---|
-| admin@gmail.com | admin |
+| admin@gmail.com | admin 
 
 ---
 
