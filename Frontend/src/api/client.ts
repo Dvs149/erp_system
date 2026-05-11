@@ -12,5 +12,22 @@ client.interceptors.request.use((config) => {
 
     return config;
 });
+// ✅ Handle invalid token / deleted user
+client.interceptors.response.use(
+  (response) => response,
 
+  (error) => {
+    // Unauthorized
+    if (error.response?.status === 401) {
+
+      // remove token
+      sessionStorage.removeItem("token");
+
+      // redirect login
+      window.location.href = "/login";
+    }
+
+    return Promise.reject(error);
+  }
+);
 export default client;
